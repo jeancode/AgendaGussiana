@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+
+            var lista = $("#contactosLista");
+
+            var contactos = [];
+            
+            contactos.push({
+                nombre:"Jeancode",
+                m:"1234567810",
+                casa:"123456789",
+                nota:"Mola Mundo"
+            })
+
+            function renderListContactos(){
+
+                $(".InfoComplItemInput input").prop("disabled",true);
+                $("#nombreDat").prop("disabled",true);
+                lista.html("");
+                for(i in contactos){
+
+                    lista.append('<div class="contactosList" rel="'+i+'">'+contactos[i].nombre+'</div>');    
+                }
+                $(".contactosList").unbind();
+                $(".contactosList").click(function(){
+                    
+                    var id =  $(this).attr("rel");
+                    if(id != undefined){
+                    
+                        var nombre = contactos[id].nombre;
+                        var mov = contactos[id].m;
+                        var casa = contactos[id].casa;
+                        var nota = contactos[id].nota;
+
+                        console.log(contactos[id]); 
+                        $("#nombreDat").val(nombre);                    }
+                        $("#movilDat").val(mov);
+                        $("#casaDat").val(casa);
+                        $("#NotasDat").val(nota);
+
+                        $(".InfoComplItemInput input").prop("disabled",true);
+                        $("#nombreDat").prop("disabled",true);
+                        
+                    
+                });
+            }
+
+            function addContatos(){
+
+                $(".InfoComplItemInput input").prop("disabled",false);
+                
+
+                $("#nombreDat").prop("disabled",false);
+                
+                $("#nombreDat").val("");                    
+                $("#movilDat").val("");
+                $("#casaDat").val("");
+                $("#NotasDat").val("");
+
+            }
+            $("#nombreDat").keyup(function(){
+                
+                var dataName = $(this).val();
+
+                
+                if(dataName.length > 3){
+                    $(".botonGuardar").prop("disabled",false);
+                }
+            });
+
+            $(".botonGuardar").click(function(){
+               
+                                
+                var a = $("#nombreDat").val();                    
+                var m = $("#movilDat").val();
+                var c = $("#casaDat").val();
+                var n = $("#NotasDat").val();
+
+
+                contactos.push({
+                    nombre:a,
+                    m:m,
+                    casa:c,
+                    nota:n
+                });
+                
+                $(".botonGuardar").prop("disabled",true);
+                renderListContactos();
+
+            });
+
+            renderListContactos();
+
+            $(".botonAgregar").click(function(){
+                addContatos();
+            });
+            $("#buscarContatos").keyup(function(){
+
+                var data =  $(this).val();
+
+                console.log(data);
+            });
+
+
+        });
+
+    </script>
+
+    <style> 
+        body{
+            margin:0px;
+            font-family: sans-serif;
+        }
+        #contenido{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-image: url(https://images.unsplash.com/photo-1473603477862-9d352d4615e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80);
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #formulario{
+
+            width: 700px;
+            height: 500px;
+            background:rgba(37, 37, 37, 0.644);
+            border-radius: 10px;;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: row;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.315);
+        }
+        #contactos{
+           min-width: 215px; 
+           height: 100%;
+           border-right:1px solid rgba(255, 255, 255, 0.11);
+           display: flex;;
+           flex-direction: column;
+        }
+        #contactosBuscar{
+            width: 100%;
+            height:70px;
+            border-bottom:1px solid rgba(255,255,255,0.11);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #contactosBuscar input{
+            min-height: 25px;
+            border-radius: 4px;
+            border:1px solid rgba(255, 255, 255, 0.082);
+            background:rgba(255, 255, 255, 0.541);
+            padding-left: 10px;
+            outline:none;
+            
+        }
+        #contactosLista{
+           width: 100%;; 
+           min-height: 30px;
+           flex:1;
+           background:rgba(255, 255, 255, 0.021);
+           overflow-y: auto;
+           overflow-x: hidden
+           
+        }
+        .contactosList{
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            color:rgb(236, 236, 236);
+            font-size: 13px;
+            -webkit-user-select: none;;
+        }
+        .contactosList:hover{
+            background:rgb(53, 173, 253);
+            transition:all .5s ease;
+        }
+        #view{
+            flex: 1;;
+            width: 100px; 
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            
+        }
+        #PreInfo{
+           width: 100%; 
+           height: 100px;
+           border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+           display: flex;
+           flex-direction: row;
+           -webkit-user-select: none;
+        }
+        #preInfoIcon{
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #preInfoName{
+            flex:1;
+            height: 100px;
+            padding-left: 0px;
+            display: flex;
+            color:white;
+            font-size: 20px;;
+            align-items: center;
+            
+        }
+        .preInfoNameInput{
+            background:transparent;
+            border:none;
+            font-size: 18px;
+            outline: none;
+            color:white;
+        }
+        .preInfoNameInput::placeholder{
+            color:rgba(255, 255, 255, 0.582);
+        }
+        .preInfoIconImage{
+            width: 60px;
+            height: 60px;
+            background-image: url(https://cdn-icons-png.flaticon.com/512/1077/1077114.png);
+            background-size: cover;
+            background-size: cover;
+            filter:invert(1);
+            border-radius: 50%;
+        }
+        #InfoCompl{
+            flex:1;
+           width: 100%; 
+           height: 30px;
+           
+        }
+        .InfoComplItem{
+            min-height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom:1px solid rgba(255, 255, 255, 0.199);
+            -webkit-user-select: none;
+        }
+        .InfoComplItemDes{
+            margin-right: 10px;
+            color:white;
+        }
+        .InfoComplItemInput input{
+            background:transparent;
+            border:none;
+            outline:none;
+            color:rgb(224, 224, 224);
+        }
+        .InfoComplItemInput input::placeholder{
+           color:rgba(255, 255, 255, 0.322); 
+        }
+        .addFControl{
+            width: 100%;
+            min-height: 60px;
+            
+            border-top:1px solid rgba(255, 255, 255, 0.253);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding-left: 20px;
+        }
+        .botonAgregar{
+            width: 100px; 
+            min-height: 30px;
+            border:1px solid rgba(255, 255, 255, 0.377);
+            border-radius:33px;
+            background:transparent;
+            color:white;
+            margin-right: 10px;
+
+        }
+        .botonGuardar{
+            width: 100px; 
+            min-height: 30px;
+            border-radius:33px;
+            border:1px solid rgba(255, 255, 255, 0.377);
+        }
+        .botonAgregar:hover{
+            background:rgb(53, 173, 253);
+            -webkit-transition: all .5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenido">
+
+        <div id="formulario">
+
+            <div id="contactos">
+
+                <div id="contactosBuscar">
+                    <input type="text" placeholder="Buscar" id="buscarContatos">
+                </div>
+
+                <div id="contactosLista">
+
+                   
+
+                </div>
+
+            </div>
+
+            <div id="view">
+
+                <div id="PreInfo">
+                    
+                    <div id="preInfoIcon">
+
+                        <div class="preInfoIconImage"></div>
+
+                    </div>
+                    <div id="preInfoName">
+                        <input class="preInfoNameInput" type="text" placeholder="Nombre" id="nombreDat">
+                    </div>
+
+                </div>
+                <div id="InfoCompl">
+
+                    <div class="InfoComplItem">
+                    
+                        <div class="InfoComplItemDes">Móvil:</div>
+                        <div class="InfoComplItemInput">
+                            <input type="text" placeholder="Telefono" id="movilDat">
+                        </div>
+                    
+                    </div>
+                    <div class="InfoComplItem">
+                    
+                        <div class="InfoComplItemDes">Casa:</div>
+                        <div class="InfoComplItemInput">
+                            <input type="text" placeholder="Telefono" id="casaDat">
+                        </div>
+                    </div>
+
+                    <div class="InfoComplItem">
+                    
+                        <div class="InfoComplItemDes">Nota:</div>
+                        <div class="InfoComplItemInput">
+                            <input type="text" placeholder="Nota" id="NotasDat">
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="addFControl">
+                    <input  class="botonAgregar" type="submit" value="Agregar">
+                    <input  class="botonGuardar"  type="submit" value="Guardar" disabled>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+</html>
